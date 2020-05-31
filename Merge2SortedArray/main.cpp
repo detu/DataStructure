@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 
-
 template< typename T>
 std::vector<T> mergeTwoSortedArray(const std::vector<T> array1,const std::vector<T> array2)
 {
@@ -21,19 +20,25 @@ std::vector<T> mergeTwoSortedArray(const std::vector<T> array1,const std::vector
            }
            indexResult++;
        }
-       else if(indexArray1 == array1.size() && indexResult < array2.size()){
+       else if(indexArray1 == array1.size() && indexResult < numRes){
            i = array2.at(indexArray2);
            indexArray2++;
            indexResult++;
        }
+       else if(indexArray2 == array2.size() && indexResult < numRes){
+           i = array1.at(indexArray1);
+           indexArray1++;
+           indexResult++;
+       }
+
    }
    return result;
 }
 
 int main() {
 
-    const std::vector<int> a1{3,4};
-    const std::vector<int> a2{1,2,5,6};
+    const std::vector<int> a2{1};
+    const std::vector<int> a1{2,4,6,8};
 
     auto  result = mergeTwoSortedArray(a1,a2);
     for (const auto& r: result)
