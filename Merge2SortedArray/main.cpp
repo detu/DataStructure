@@ -1,15 +1,17 @@
 #include <iostream>
-#include <array>
+#include <vector>
 
-// node:using std::array is not flexible because we can't vary size of the array. better to use vector.
 
-void mergeTwoSortedArray(const std::array<int,2> array1,const std::array<int,4> array2, std::array<int,6>& result)
+template< typename T>
+std::vector<T> mergeTwoSortedArray(const std::vector<T> array1,const std::vector<T> array2)
 {
    int indexArray1{0}, indexArray2{0}, indexResult{0};
+   int numRes = array1.size() + array2.size();
+   std::vector<T> result(numRes,0);
 
    for (auto& i: result)
    {
-       if (indexArray1 < 2 && indexArray2 < 4) {
+       if (indexArray1 < array1.size() && indexArray2 < array2.size()) {
            if (array1.at(indexArray1) < array2.at(indexArray2)) {
                i = array1.at(indexArray1);
                indexArray1++;
@@ -19,21 +21,21 @@ void mergeTwoSortedArray(const std::array<int,2> array1,const std::array<int,4> 
            }
            indexResult++;
        }
-       else if(indexArray1 == 2 && indexResult < 6){
+       else if(indexArray1 == array1.size() && indexResult < array2.size()){
            i = array2.at(indexArray2);
            indexArray2++;
            indexResult++;
        }
    }
+   return result;
 }
 
 int main() {
 
-    const std::array<int,2> a1{3,4};
-    const std::array<int,4> a2{1,2,5,6};
-    std::array<int,6> result{0,0,0,0,0,0};
+    const std::vector<int> a1{3,4};
+    const std::vector<int> a2{1,2,5,6};
 
-    mergeTwoSortedArray(a1,a2, result);
+    auto  result = mergeTwoSortedArray(a1,a2);
     for (const auto& r: result)
         std::cout << r << ' ';
     return 0;
