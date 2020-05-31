@@ -1,25 +1,40 @@
 #include <iostream>
 #include <array>
 
-std::array<int,n3> sortArray(const std::array<int,n1> a1,const std::array<int,n2> a2)
+// node:using std::array is not flexible because we can't vary size of the array. better to use vector.
+
+void mergeTwoSortedArray(const std::array<int,2> array1,const std::array<int,4> array2, std::array<int,6>& result)
 {
-  size_t n3 = a1.size() + a2.size();
-  std::array<int, n3> result;
-  // sort a1
-  // sort a2
-  for(auto i: result){
+   int indexArray1{0}, indexArray2{0}, indexResult{0};
 
-  }
-
-  return result;
+   for (auto& i: result)
+   {
+       if (indexArray1 < 2 && indexArray2 < 4) {
+           if (array1.at(indexArray1) < array2.at(indexArray2)) {
+               i = array1.at(indexArray1);
+               indexArray1++;
+           } else if (array2.at(indexArray2) < array1.at(indexArray1)) {
+               i = array2.at(indexArray2);
+               indexArray2++;
+           }
+           indexResult++;
+       }
+       else if(indexArray1 == 2 && indexResult < 6){
+           i = array2.at(indexArray2);
+           indexArray2++;
+           indexResult++;
+       }
+   }
 }
 
 int main() {
 
-    const std::array<int,2> a1 = {3,4};
-    const std::array<int,4> a2 = {1,2,5,6};
+    const std::array<int,2> a1{3,4};
+    const std::array<int,4> a2{1,2,5,6};
+    std::array<int,6> result{0,0,0,0,0,0};
 
-    auto sort2Arrays = sortArray(a1,a2);
-    std::cout << "Hello, World!" << std::endl;
+    mergeTwoSortedArray(a1,a2, result);
+    for (const auto& r: result)
+        std::cout << r << ' ';
     return 0;
 }
